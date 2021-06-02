@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>How it works</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        <!-- CSS only -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+        <!-- JavaScript Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        
+        <nav class="navbar navbar-expand-sm bg-dark fixed-top" style="padding-left: 20px;">
+            <a class="navbar-brand">
+                <img src="{{ url_for('static', filename='classical.00000.wav.png')}}" style="width: 40px;">
+            </a>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/how_it_works">How it works</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/results">Try it out</a>
+                </li>
+            </ul>
+        </nav>
+
+
+        <br>
+        <br>
+        <br>
+        <h1 style="text-align: center;">How it works</h1>
+        <br>
+
+        <div class="container">
+            <p>
+                The first step of the project was to gather as many samples of the main musical genres as possible 
+                to provide a good base of knowledge for the training portion of the project. This was acheived via 
+                Spotify, personal music collections, and online music archives. All music was then uploaded to the 
+                Google Cloud.
+            </p>
+            
+            <p>
+                Now that we had our data, we needed to convert them a standardized format. Since image classification 
+                modeling techniques are currently more advanced than audio classification, we decided to turn all 
+                audio files into mel spectrograms, a graph that maps the decibels over time. Two examples are shown 
+                below, a sample of blues on the left and a sample of classical on the right.
+            </p>
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col" >
+                        <img src="{{ url_for('static', filename='blues.00000.wav.png')}}" width="75%">
+                    </div>
+                    <div class="col">
+                        <img src="{{ url_for('static', filename='classical.00000.wav.png')}}" width="75%">
+                    </div>
+                </div>
+            </div>
+            
+            <br>
+            <p>
+                According to common machine learning conventions and in the interest of minimizing storage space and
+                computing power, we stored the mel spectrograms in a single h5 file. This process was time-intensive 
+                but worth the effort.
+            </p>
+
+            <p>
+                The next step in the process was developing the actual model. After creating basic sequential models
+                on our own, we tested pre-trained image classification models such as Inception, VGG, and Efficient 
+                Net. We experienced the most success with the Inception v3 model and ultimately used this as the basis 
+                of final model's architecture. A graphical depiction of the Inception model's architecture is shown
+                below and more information about how it works can be found 
+                <a href="https://cloud.google.com/tpu/docs/inception-v3-advanced">here.</a>
+            </p>
+
+            <!-- https://cloud.google.com/tpu/docs/inception-v3-advanced -->
+            <img src="{{ url_for('static', filename='inceptionv3onc--oview.png')}}" style="margin-left: auto; margin-right: auto; width: 75%; display: block;">
+
+            <br>
+            <p>
+                When the model is done running through all training data we collected at the beginning of the project, 
+                the weights between nodes are saved. The final model was now ready for use. New samples are converted 
+                to mel spectrograms and the results printed out for the user. Go to our 
+                <a href="/results">Identifier page</a> to try it out.
+            </p>
+
+        </div>
+        <br>
+
+
+        <script src="" async defer></script>
+    </body>
+
+    
+</html>

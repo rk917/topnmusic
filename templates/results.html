@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Try it out</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        <!-- CSS only -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+        <!-- JavaScript Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        
+        <nav class="navbar navbar-expand-sm bg-dark fixed-top" style="padding-left: 20px;">
+            <a class="navbar-brand">
+                <img src="{{ url_for('static', filename='classical.00000.wav.png')}}" style="width: 40px;">
+            </a>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/how_it_works">How it works</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/results">Try it out</a>
+                </li>
+            </ul>
+        </nav>
+
+        <br>
+        <br>
+        <br>
+        <h1 style="text-align: center;">Music Identifier</h1>
+        <br>
+
+        <div class="container">         
+            
+            <div class="card">
+                <div class="card-body">
+                    <p>Upload an audio file (.wav, .mp3) and find out what genre of music it is.</p>
+                    <br>
+                    <form class="form-inline" id="fileForm" action="{{ url_for('results') }}" method="POST" enctype="multipart/form-data">
+                        <!-- <label for="inputFile">Select a file: </label> -->
+                        <input type="file" class="form-control form-control-file border" name="file" accept="audio/mpeg,audio/mp3,audio/wav,audio/x-wav" required />
+                        <!-- https://stackoverflow.com/questions/4234589/validation-of-file-extension-before-uploading-file -->
+                        <br>
+                        <input type="submit" class="btn btn-primary" value="Submit">
+                        <br>
+                        <br>
+                        <p>(Please be patient, this could take a couple minutes.)</p>
+                    </form>
+                </div>
+            </div>
+            <br>
+            
+            {% if prediction_text %}
+            
+            <h3>Results</h3>
+            <br>
+            <p>Here are the results for <b>"{{ filename }}"</b>.</p>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>GENRE</th>
+                        <th>% MATCH</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Classical</td>
+                        <td>{{ prediction_text[0] }}</td>
+                    </tr>
+                    <tr>
+                        <td>Country</td>
+                        <td>{{ prediction_text[1] }}</td>
+                    </tr>
+                    <tr>
+                        <td>Electronic</td>
+                        <td>{{ prediction_text[2] }}</td>
+                    </tr>
+                    <tr>
+                        <td>Hip-hop</td>
+                        <td>{{ prediction_text[3] }}</td>
+                    </tr>
+                    <tr>
+                        <td>Jazz</td>
+                        <td>{{ prediction_text[4] }}</td>
+                    </tr>
+                    <tr>
+                        <td>Blues</td>
+                        <td>{{ prediction_text[5] }}</td>
+                    </tr>
+                    <tr>
+                        <td>Rock</td>
+                        <td>{{ prediction_text[6] }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            {% endif %}
+            <br>
+            
+        </div>
+        <br>
+
+        <script></script>
+    </body>   
+</html>
